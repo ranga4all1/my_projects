@@ -19,9 +19,43 @@ df = pd.read_csv("penguins_size.csv")
 # print("\n")
 # print(df.head())
 
+# df.columns
+# df.info()
+
+# check for missing values in the data
+# df.isnull().sum()
+
+# remove the missing values and save dataframe as a new dataframe variable new_df
+new_df = df.dropna()
+# print(new_df)
+
+# ### scatterplot with widgets using Streamlit
+#
+# Let’s plot an interesting scatter plotting by choosing the different categories from the penguin's dataset.
+# The following code will help to make a scatter plot by selecting several species of penguins and picking
+# categories for the x-axis and y-axis from culmen length, culmen depth, flipper length, and body mass.
+
+# scatterplot with widgets using Streamlit
+
+st.subheader('Streamlit visualization app - Palmer Archipelago (Antarctica) penguin data - Scatter plotting with selection of category')
+
+# select box is a Displayed widget that allows the user to select a value from a list of options.
+select_species = st.selectbox('Select species', new_df['species'].unique())
+selected_x_variable = st.selectbox('Select x-axis variable', new_df.columns[2:6])
+selected_y_variable = st.selectbox('Select y-axis variable', new_df.columns[2:6])
+
+p_df = new_df[new_df['species'] == select_species]
+fig, ax = plt.subplots()
+ax = plt.scatter(x = p_df[selected_x_variable], y = p_df[selected_y_variable])
+plt.xlabel(selected_x_variable)
+plt.ylabel(selected_y_variable)
+st.pyplot(fig)
+
+#### Now, let's visualize additional supporting data using Streamlit
+
 # st.write will help us to write the data in application and head() will show the first 5 rows of the data
 st.title("First 5 rows of 'Penguin Size' dataset")
-st.write(df.head())
+st.write(new_df.head())
 
 # #### Let's start plotting the data
 # 
@@ -31,7 +65,7 @@ st.write(df.head())
 # the flipper length and bill length of penguins.
 
 st.title('Streamlit Line_chart, Bar_chart and Area_chart')
-df_dbh_grouped = pd.DataFrame(df.groupby(['flipper_length_mm']).count()['culmen_length_mm'],)
+df_dbh_grouped = pd.DataFrame(new_df.groupby(['flipper_length_mm']).count()['culmen_length_mm'],)
 df_dbh_grouped.columns = ["flipper and culmen length"]
 # print(df_dbh_grouped)
 
@@ -58,7 +92,7 @@ st.title("Seaborn and Matplotlib Histograms")
 # Making Seaborn chart
 st.subheader("Seaborn chart")
 fig_sb, ax_sb = plt.subplots()
-ax_sb = sns.histplot(df['flipper_length_mm'], kde=False, bins=30)
+ax_sb = sns.histplot(new_df['flipper_length_mm'], kde=False, bins=30)
 plt.xlabel('flipper_length_mm')
 plt.ylabel('count')
 st.pyplot(fig_sb)
@@ -66,7 +100,7 @@ st.pyplot(fig_sb)
 # Making matplotlib chart
 st.subheader("Matplotlib chart")
 fig_mp, ax_mp = plt.subplots()
-ax_mp.hist(df['flipper_length_mm'], bins=30)
+ax_mp.hist(new_df['flipper_length_mm'], bins=30)
 plt.xlabel('flipper_length_mm')
 plt.ylabel('count')
 st.pyplot(fig_mp)
@@ -80,7 +114,7 @@ st.pyplot(fig_mp)
 # create plotly histogram
 
 st.title("Plotly Histogram - Penguins")
-fig = px.histogram(df, x="body_mass_g", nbins=30)
+fig = px.histogram(new_df, x="body_mass_g", nbins=30)
 st.plotly_chart(fig)
 
 # #### Bokeh
@@ -92,7 +126,7 @@ st.plotly_chart(fig)
 st.title("Bokeh plots - Penguins")
 st.subheader("Bokeh chart")
 scatterplot = figure(title="Bokeh Scatterplot")
-scatterplot.scatter(df['culmen_length_mm'], df['culmen_depth_mm'])
+scatterplot.scatter(new_df['culmen_length_mm'], new_df['culmen_depth_mm'])
 scatterplot.xaxis.axis_label = 'culmen_depth_mm'
 scatterplot.yaxis.axis_label = 'culmen_length_mm'
 st.bokeh_chart(scatterplot)
@@ -106,35 +140,9 @@ st.bokeh_chart(scatterplot)
 
 st.title("Altair Bar Chart - Penguins")
 st.subheader("Altair Bar Chart")
-fig = alt.Chart(df).mark_bar().encode(x = 'species', y = 'body_mass_g').properties(width=600, height=400)
+fig = alt.Chart(new_df).mark_bar().encode(x = 'species', y = 'body_mass_g').properties(width=600, height=400)
 
 st.altair_chart(fig)
 
-
-# ### scatterplot with widgets using Streamlit
-# 
-# Let’s plot an interesting scatter plotting by choosing the different categories from the penguin's dataset.
-# The following code will help to make a scatter plot by selecting several species of penguins and picking
-# categories for the x-axis and y-axis from culmen length, culmen depth, flipper length, and body mass.
-
-# scatterplot with widgets using Streamlit
-
-st.subheader('Scatter plotting with selection of category')
-
-# select box is a Displayed widget that allows the user to select a value from a list of options.
-select_species = st.selectbox('Select species', df['species'].unique())
-selected_x_variable = st.selectbox('Select x-axis variable', df.columns[2:6])
-selected_y_variable = st.selectbox('Select y-axis variable', df.columns[2:6])
-
-p_df = df[df['species'] == select_species]
-fig, ax = plt.subplots()
-ax = plt.scatter(x = p_df[selected_x_variable], y = p_df[selected_y_variable])
-plt.xlabel(selected_x_variable)
-plt.ylabel(selected_y_variable)
-st.pyplot(fig)
-
 # run this app via terminal using below command
 # streamlit run streamlit_penguins.py
-
-
-
