@@ -1,6 +1,7 @@
 # image to pencil sketch using cv2, python and matplotlib for visualization
 
 # import the necessary packages
+import argparse
 import cv2
 import matplotlib.pyplot as plt
 
@@ -106,6 +107,12 @@ We can convert BGR image to RGB by using any of the following methods.
 # plt.savefig('temp4.png')
 # plt.show()
 
+# construct the argument parser and parse the arguments
+ap = argparse.ArgumentParser()
+ap.add_argument("-i", "--image", required=True,
+	help="path to the input image")
+args = vars(ap.parse_args())
+
 #  Combine everything together to create a function that returns the sketch
 #  of an image
 def sketch_image(photo, k_size):
@@ -146,4 +153,7 @@ def sketch_image(photo, k_size):
     plt.show()
 
 #  function call
-sketch_image(photo="mahatma_gandhi.jpg", k_size=111)
+sketch_image(photo=(args["image"]), k_size=111)
+
+# USAGE
+# python image_to_pencil_sketch.py --image mahatma_gandhi.jpg

@@ -19,3 +19,16 @@ we can easily do this programmatically using the divide function from the cv2 li
 
 1. `image_to_pencil_sketch.ipynb` - jupyter notebook with step-by-step instructions and visualizations.
 2. `image_to_pencil_sketch.py` - interactive python program file for converting images to sketch.
+
+### USAGE
+`python image_to_pencil_sketch.py --image mahatma_gandhi.jpg`
+
+**options:**
+
+  -h, --help            
+                
+                show this help message and exit
+
+  -i IMAGE, --image IMAGE
+                        
+                path to the input image
