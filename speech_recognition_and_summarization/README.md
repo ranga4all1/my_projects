@@ -76,5 +76,5 @@ Pyaudio can be a little tricky to install, since it depends on system packages. 
 
 You'll want to download a couple of audio files to test the transcription with:
 
-* [marketplace_full.mp3](https://github.com/ranga4all1/ai101/blob/main/deep_learning/speech_recognition/speech_recognition_and_summarization/marketplace_full.mp3)
-* [marketplace.mp3](https://github.com/ranga4all1/ai101/blob/main/deep_learning/speech_recognition/speech_recognition_and_summarization/marketplace.mp3)
+* [marketplace_full.mp3](https://github.com/ranga4all1/my_projects/blob/master/speech_recognition_and_summarization/marketplace_full.mp3)
+* [marketplace.mp3](https://github.com/ranga4all1/my_projects/blob/master/speech_recognition_and_summarization/marketplace.mp3)
