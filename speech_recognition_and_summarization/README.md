@@ -4,8 +4,6 @@ In this project, we'll build a system that can automatically recognize speech an
 
 We'll also include a way to hook up a microphone to automatically record and transcribe audio for live notetaking.  This could be used to record and transcribe meetings in real-time.
 
-By the end of this project, you'll have a speech to text project that you can continue to build on.
-
 **Project Steps**
 
 * Create a speech recognition system using vosk
@@ -15,7 +13,7 @@ By the end of this project, you'll have a speech to text project that you can co
 
 ## Code
 
-You can find the code for this project [here](https://github.com/ranga4all1/ai101/tree/main/deep_learning/speech_recognition/speech_recognition_and_summarization).
+You can find the code for this project [here](https://github.com/ranga4all1/my_projects/tree/master/speech_recognition_and_summarization).
 
 File overview:
 
