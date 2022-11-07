@@ -3,6 +3,7 @@
 # Import required libraries
 import numpy as np
 import pandas as pd
+import opendatasets as od
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.feature_extraction import DictVectorizer
 from sklearn.linear_model import LogisticRegression
@@ -12,6 +13,10 @@ import xgboost as xgb
 from sklearn.metrics import roc_auc_score, accuracy_score, precision_score, recall_score, f1_score, make_scorer
 import bentoml
 import json
+
+# Download dataset
+dataset_url = 'https://www.kaggle.com/datasets/deepankurk/flight-take-off-data-jfk-airport'
+od.download(dataset_url)
 
 # Load data
 df = pd.read_csv('flight-take-off-data-jfk-airport/M1_final.csv')

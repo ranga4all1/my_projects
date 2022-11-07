@@ -31,6 +31,95 @@ Any airline flights that departed or arrived 15 min late at their destination to
  - Alternatively this model can be deployed as an API endpoint on the cloud using `bentoctl` -  supporting AWS SageMaker, AWS Lambda, EC2, Google Compute Engine, Google cloud run, Azure, Heroku and more.
  - CAUTION: Deploying model to clould services may **incurr charges** unless you use free tier (if available). Verify before deployment, delete after deployment to avoid recurring charges etc. 
 
+### How to run this project?
+ Prerequisite: Docker. If not installed already, install locally using https://docs.docker.com/
+
+1. Clone the repo
+```
+git clone https://github.com/ranga4all1/flight_delay_prediction.git
+```
+2. Install all dependencies required for this project
+```
+pip install opendatasets scikit-learn xgboost pandas numpy bentoml 
+```
+3. Run `train.py' and supply your kaggle credentials when prompted (for dataset download from kaggle)
+```
+cd flight_delay_prediction
+python train.py
+```
+3. Verify model saved by bentoML exists
+```
+bentoml models list
+```
+4. Load saved model and serve it locally for prediction testing via swagger UI web service using BentoML. 
+```
+cd flight_delay_prediction_service_bentoml
+bentoml serve service.py:svc --reload
+```
+    - Go to http://0.0.0.0:3000
+    - Click on Service APIs -> POST -> Try it out. Fill out 'request body' with JSON input and click -> Execute
+    - Check 'Response body' - e. g. 
+
+        {
+        "status": "NOT DELAYED"
+        }
+
+    - Use this json input for testing. Modify values to test multiple times and obtain various results - "DELAYED". "MAYBE", "NOT DELAYED"
+
+    {
+    "month": 11,
+    "day_of_month": 21,
+    "day_of_week": 4,
+    "carrier_code": "dl",
+    "dest": "bos",
+    "scheduled_duration": 80,
+    "distance": 187,
+    "scheduled_departure": 420,
+    "actual_dep_time": 420,
+    "scheduled_arrival": 500,
+    "temperature": 39,
+    "dew_point": 33,
+    "humidity": 79,
+    "wind": "nne",
+    "wind_speed": 3,
+    "wind_gust": 0,
+    "pressure": 30.2,
+    "condition": "fair",
+    "flt_sch_arrival": 41,
+    "flt_sch_departure": 31,
+    "taxi_out": 27
+    }
+
+
+5. Build a Bento - run the `bentoml build` CLI command from the same directory
+```
+bentoml build
+```
+6. Verify bento
+```
+bentoml list
+```
+7. Serve production ready bento locally and test
+```
+bentoml serve flight_delay_classifier:latest --production
+```
+8. Containerize bento
+```
+bentoml containerize flight_delay_classifier:latest
+```
+9. Verify docker container created
+```
+docker images
+```
+10. Run the docker image to start the BentoServer and test
+```
+docker run -it --rm -p 3000:3000 flight_delay_classifier:latest serve --production
+```
+11. Deploy to **Google cloud run** using `bentoctl` or manually using this guide - https://docs.bentoml.org/en/0.13-lts/deployment/google_cloud_run.html
+
+Note: This project has been deployed to 'Google cloud run' and is available at this URL: https://flight-delay-prediction-service-4wgcgnt6oq-wn.a.run.app
+This deployment will be tear down after 2 weeks.
+
 ## References
 - Docker:  https://docs.docker.com/ 
 - BentoML:  https://docs.bentoml.org/en/latest/index.html
