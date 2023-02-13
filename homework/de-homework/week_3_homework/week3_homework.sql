@@ -55,7 +55,7 @@ SELECT
     ,COUNT(DOlocationID) AS non_null_value_count
 FROM dtc-de-375303.fhv.fhv_tripdata_non_partitioned;
 
--- answer: 0 MB for the External Table and 317.94MB for the Materialized Table
+-- answer: I think answer for Question 3 is : 5495510 and there may be typo in answer choices provided in that question.
 
 
 -- Question 4
