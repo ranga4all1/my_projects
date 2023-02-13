@@ -55,6 +55,9 @@ SELECT
     ,COUNT(DOlocationID) AS non_null_value_count
 FROM dtc-de-375303.fhv.fhv_tripdata_non_partitioned;
 
+-- answer: 0 MB for the External Table and 317.94MB for the Materialized Table
+
+
 -- Question 4
 -- What is the best strategy to optimize the table if query always filter by pickup_datetime and order by affiliated_base_number?
 -- answer: Partition by pickup_datetime Cluster on affiliated_base_number
